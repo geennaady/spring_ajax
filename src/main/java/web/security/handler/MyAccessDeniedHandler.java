@@ -17,7 +17,7 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth != null) {
+            if(auth != null) {
             Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
 
             authorities.forEach(authority -> {

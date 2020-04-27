@@ -33,3 +33,22 @@ $('.info-edit').click( function(){
     $('#eEmail').attr('placeholder', data[4]);
 });
 
+
+$.getJSON('http://localhost:8080/list', function (json) {
+    var tr = [];
+    for (var i = 0; i < json.length; i++) {
+        tr.push('<tr>');
+        tr.push('<td>' + json[i].id + '</td>');
+        tr.push('<td>' + json[i].firstName + '</td>');
+        tr.push('<td>' + json[i].lastName + '</td>');
+        tr.push('<td>' + json[i].age + '</td>');
+        tr.push('<td>' + json[i].email + '</td>');
+        tr.push('<td>' + json[i].allRoles + '</td>');
+        tr.push('<td><button class=\'edit\'>Edit</button></td>');
+        tr.push('<td><button class=\'delete\' id=' + json[i].id + '>Delete</button></td>');
+        tr.push('</tr>');
+    }
+    $('tbody').append($(tr.join('')));
+});
+
+
