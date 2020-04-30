@@ -18,6 +18,12 @@ public class MainController {
 		return new ModelAndView("redirect:/login");
 	}
 
+	@GetMapping(value = "admin")
+	public String printAdmin(@AuthenticationPrincipal User user, ModelMap model) {
+		model.addAttribute("admin", user);
+		return "admin";
+	}
+
     @GetMapping(value = "login")
     public String loginPage() {
 		return "login";

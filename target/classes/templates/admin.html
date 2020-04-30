@@ -46,8 +46,7 @@
     <div class="col-9">
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="list-admin" role="tabpanel" aria-labelledby="list-admin-list">
-                <h1>Admin panel</h1>
-                <p th:if="${message != null}" th:text="${message}">ss</p>
+                <h1 id="h1-admin">Admin panel</h1>
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-admin-tab" data-toggle="tab" href="#nav-admin"
@@ -96,64 +95,54 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form th:action="@{/admin/update}" th:object="${user}"
-                                                          method="post">
-                                                        <div class="row justify-content-center font-weight-bold">ID
-                                                        </div>
-                                                        <div class="form-group col-sm-6 offset-md-3">
-                                                            <input id="editId" type="text" class="form-control"
-                                                                   th:field="*{id}" readonly>
-                                                        </div>
-                                                        <div class="row justify-content-center font-weight-bold">First
-                                                            Name
-                                                        </div>
-                                                        <div class="form-group col-sm-6 offset-md-3">
-                                                            <input id="eFirstName" type="text" class="form-control"
-                                                                   th:field="*{firstName}"/>
-                                                        </div>
-                                                        <div class="row justify-content-center font-weight-bold">Last
-                                                            Name
-                                                        </div>
-                                                        <div class="form-group col-sm-6 offset-md-3">
-                                                            <input id="eLastName" type="text" class="form-control"
-                                                                   th:field="*{lastName}"/>
-                                                        </div>
-                                                        <div class="row justify-content-center font-weight-bold">Age
-                                                        </div>
-                                                        <div class="form-group col-sm-6 offset-md-3">
-                                                            <input id="eAge" type="number" class="form-control"
-                                                                   th:field="*{age}"/>
-                                                        </div>
-                                                        <div class="row justify-content-center font-weight-bold">Email
-                                                        </div>
-                                                        <div class="form-group col-sm-6 offset-md-3">
-                                                            <input id="eEmail" type="email" class="form-control"
-                                                                   th:field="*{email}"/>
-                                                            <p th:if="${#fields.hasErrors('email')}"
-                                                               th:errors="*{email}">Name Error</p>
-                                                        </div>
-                                                        <div class="row justify-content-center font-weight-bold">
-                                                            Password
-                                                        </div>
-                                                        <div class="form-group col-sm-6 offset-md-3">
-                                                            <input type="password" class="form-control"
-                                                                   th:field="*{password}"/>
-                                                        </div>
-                                                        <div class="row justify-content-center font-weight-bold">Role
-                                                        </div>
-                                                        <div class="row justify-content-center col-sm-6 offset-md-3 font-weight-bold">
-                                                            <select name="role" class="custom-select" size="2">
-                                                                <option value="1">Admin</option>
-                                                                <option value="2" selected>User</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="modal-footer mt-3">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Close
-                                                            </button>
-                                                            <button type="submit" class="btn btn-primary">Edit</button>
-                                                        </div>
-                                                    </form>
+                                                    <div class="row justify-content-center font-weight-bold">ID
+                                                    </div>
+                                                    <div class="form-group col-sm-6 offset-md-3">
+                                                        <input id="editId" type="text" class="form-control" readonly>
+                                                    </div>
+                                                    <div class="row justify-content-center font-weight-bold">First
+                                                        Name
+                                                    </div>
+                                                    <div class="form-group col-sm-6 offset-md-3">
+                                                        <input id="eFirstName" type="text" class="form-control"/>
+                                                    </div>
+                                                    <div class="row justify-content-center font-weight-bold">Last Name
+                                                    </div>
+                                                    <div class="form-group col-sm-6 offset-md-3">
+                                                        <input id="eLastName" type="text" class="form-control"/>
+                                                    </div>
+                                                    <div class="row justify-content-center font-weight-bold">Age
+                                                    </div>
+                                                    <div class="form-group col-sm-6 offset-md-3">
+                                                        <input id="eAge" type="number" class="form-control"/>
+                                                    </div>
+                                                    <div class="row justify-content-center font-weight-bold">Email
+                                                    </div>
+                                                    <div class="form-group col-sm-6 offset-md-3">
+                                                        <input id="eEmail" type="email" class="form-control"/>
+                                                    </div>
+                                                    <div class="row justify-content-center font-weight-bold">
+                                                        Password
+                                                    </div>
+                                                    <div class="form-group col-sm-6 offset-md-3">
+                                                        <input id="ePassword" name="password" type="password" class="form-control"/>
+                                                    </div>
+                                                    <div class="row justify-content-center font-weight-bold">Role
+                                                    </div>
+                                                    <div class="row justify-content-center col-sm-6 offset-md-3 font-weight-bold">
+                                                        <select name="role" id="eRole" class="custom-select" size="2">
+                                                            <option value="1">Admin</option>
+                                                            <option value="2" selected>User</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="modal-footer mt-3">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close
+                                                        </button>
+                                                        <button id="btn-edit-user" type="submit"
+                                                                class="btn btn-primary">Edit
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -173,54 +162,52 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="#" th:action="@{/admin/delete}" th:object="${user}"
-                                                          method="post">
-                                                        <div class="row justify-content-center font-weight-bold">ID
-                                                        </div>
-                                                        <div class="form-group col-sm-6 offset-md-3">
-                                                            <input id="deleteId" type="text" class="form-control"
-                                                                   name="id" readonly>
-                                                        </div>
-                                                        <div class="row justify-content-center font-weight-bold">First
-                                                            Name
-                                                        </div>
-                                                        <div class="form-group col-sm-6 offset-md-3">
-                                                            <input id="dFirstName" type="text" class="form-control"
-                                                                   name="firstName" readonly>
-                                                        </div>
-                                                        <div class="row justify-content-center font-weight-bold">Last
-                                                            Name
-                                                        </div>
-                                                        <div class="form-group col-sm-6 offset-md-3">
-                                                            <input id="dLastName" type="text" class="form-control"
-                                                                   readonly>
-                                                        </div>
-                                                        <div class="row justify-content-center font-weight-bold">Age
-                                                        </div>
-                                                        <div class="form-group col-sm-6 offset-md-3">
-                                                            <input id="dAge" type="text" class="form-control" readonly>
-                                                        </div>
-                                                        <div class="row justify-content-center font-weight-bold">Email
-                                                        </div>
-                                                        <div class="form-group col-sm-6 offset-md-3">
-                                                            <input id="dEmail" type="text" class="form-control"
-                                                                   readonly>
-                                                        </div>
-                                                        <div class="row justify-content-center font-weight-bold">Role
-                                                        </div>
-                                                        <div class="row justify-content-center col-sm-6 offset-md-3 font-weight-bold">
-                                                            <select name="role" class="custom-select" size="2" disabled>
-                                                                <option value="1">Admin</option>
-                                                                <option value="2" selected>User</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Close
-                                                            </button>
-                                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                                        </div>
-                                                    </form>
+                                                    <div class="row justify-content-center font-weight-bold">ID
+                                                    </div>
+                                                    <div class="form-group col-sm-6 offset-md-3">
+                                                        <input id="deleteId" type="text" class="form-control"
+                                                               name="id" readonly>
+                                                    </div>
+                                                    <div class="row justify-content-center font-weight-bold">First
+                                                        Name
+                                                    </div>
+                                                    <div class="form-group col-sm-6 offset-md-3">
+                                                        <input id="dFirstName" type="text" class="form-control"
+                                                               name="firstName" readonly>
+                                                    </div>
+                                                    <div class="row justify-content-center font-weight-bold">Last
+                                                        Name
+                                                    </div>
+                                                    <div class="form-group col-sm-6 offset-md-3">
+                                                        <input id="dLastName" type="text" class="form-control"
+                                                               readonly>
+                                                    </div>
+                                                    <div class="row justify-content-center font-weight-bold">Age
+                                                    </div>
+                                                    <div class="form-group col-sm-6 offset-md-3">
+                                                        <input id="dAge" type="text" class="form-control" readonly>
+                                                    </div>
+                                                    <div class="row justify-content-center font-weight-bold">Email
+                                                    </div>
+                                                    <div class="form-group col-sm-6 offset-md-3">
+                                                        <input id="dEmail" type="text" class="form-control"
+                                                               readonly>
+                                                    </div>
+                                                    <div class="row justify-content-center font-weight-bold">Role
+                                                    </div>
+                                                    <div class="row justify-content-center col-sm-6 offset-md-3 font-weight-bold">
+                                                        <select name="role" class="custom-select" size="2" disabled>
+                                                            <option value="1">Admin</option>
+                                                            <option value="2" selected>User</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close
+                                                        </button>
+                                                        <button id="btn-delete-user" class="btn btn-danger">Delete
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -295,17 +282,7 @@
                                         <th scope="col">Role</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td scope="row" th:text="${admin.getId()}"></td>
-                                        <td th:text="${admin.getFirstName()}" th:value="${admin.getFirstName()}"></td>
-                                        <td th:text="${admin.getLastName()}"></td>
-                                        <td th:text="${admin.getAge()}"></td>
-                                        <td th:text="${admin.getEmail()}"></td>
-                                        <td th:each="role : ${admin.getAllRoles()}">
-                                            <th:block th:text="${role}"/>
-                                        </td>
-                                    </tr>
+                                    <tbody id="tbody-single">
                                     </tbody>
                                 </table>
                             </div>
@@ -319,9 +296,6 @@
 <script src="../js/myScripts.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-<!--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
