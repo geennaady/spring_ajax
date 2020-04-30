@@ -9,46 +9,116 @@ $('#type-btn').click(function () {
 });
 
 */
-$('.danger-delete').click( function(){
-    let data = $(this).closest("tr").children("td").map(function () {
-        return $(this).text();
+function listUser() {
+    $.getJSON('http://localhost:8080/api/list', function (json) {
+        let tr = [];
+        for (let i in json) {
+            tr.push('<tr>');
+            tr.push('<td>' + json[i].id + '</td>');
+            tr.push('<td>' + json[i].firstName + '</td>');
+            tr.push('<td>' + json[i].lastName + '</td>');
+            tr.push('<td>' + json[i].age + '</td>');
+            tr.push('<td>' + json[i].email + '</td>');
+            tr.push('<td>' + json[i].allRoles + '</td>');
+            tr.push('<td><button type="submit" class="btn btn-info info-edit" data-toggle="modal"\n' +
+                'data-target="#editModal" data-whatever="@mdo" >Edit</button></td>');
+            tr.push('<td><button type="submit" class="btn btn-danger danger-delete" data-toggle="modal"' +
+                'data-target="#deleteModal" data-whatever="@mdo" >Delete</button></td>');
+            tr.push('</tr>');
+        }
+        $('.tbody-admin').append($(tr.join('')));
+    });
+}
+
+listUser();
+
+$('#nav-admin-tab').click(function () {
+    $("tbody").empty();
+    listUser();
+})
+
+$(function () {
+    $('#btn-new-user').click(function () {
+        let role = $('#aRole').val();
+
+        let jsonObj = {
+            firstName: $('#aFirstName').val(),
+            lastName: $('#aLastName').val(),
+            age: $('#aAge').val(),
+            email: $('#aEmail').val(),
+            password: $('#aPassword').val(),
+        }
+
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            url: 'http://localhost:8080/api/add/' + role,
+            data: JSON.stringify(jsonObj),
+            cache: false,
+            success: function (result) {
+                $("h1").append("<h6><div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">\n" +
+                    "  <strong>Success!</strong> New user was added.\n" +
+                    "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+                    "    <span aria-hidden=\"true\">&times;</span>\n" +
+                    "  </button>\n" +
+                    "</div></h6>")
+            },
+            error: function (jqXHR, err) {
+                if(jqXHR.status === 406) {
+                    $("h1").append("<h6><div class=\"alert alert-danger alert-dismissible fade show\" role=\"alert\">\n" +
+                        "  <strong>Warning!</strong> This user already exist.\n" +
+                        "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+                        "    <span aria-hidden=\"true\">&times;</span>\n" +
+                        "  </button>\n" +
+                        "</div></h6>")
+                } else if(jqXHR.status === 400) {
+                    $("h1").append("<h6><div class=\"alert alert-danger alert-dismissible fade show\" role=\"alert\">\n" +
+                        "  <strong>Warning!</strong> Enter all fields!\n" +
+                        "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+                        "    <span aria-hidden=\"true\">&times;</span>\n" +
+                        "  </button>\n" +
+                        "</div></h6>")
+                }
+            }
+        });
     });
 
-    $('#deleteId').val(data[0]);
-    $('#dFirstName').val(data[1]);
-    $('#dLastName').val(data[2]);
-    $('#dAge').val(data[3]);
-    $('#dEmail').val(data[4]);
-});
+    $('tbody').on('click', 'button.danger-delete', function () {
+        let data = $(this).closest("tr").children("td").map(function () {
+            return $(this).text();
+        });
 
-$('.info-edit').click( function(){
-    let data = $(this).closest("tr").children("td").map(function () {
-        return $(this).text();
+        $('#deleteId').val(data[0]);
+        $('#dFirstName').val(data[1]);
+        $('#dLastName').val(data[2]);
+        $('#dAge').val(data[3]);
+        $('#dEmail').val(data[4]);
     });
 
-    $('#editId').val(data[0]);
-    $('#eFirstName').attr('placeholder', data[1]);
-    $('#eLastName').attr('placeholder', data[2]);
-    $('#eAge').val(data[3]);
-    $('#eEmail').attr('placeholder', data[4]);
+    $('tbody').on('click', 'button.info-edit', function () {
+        let data = $(this).closest("tr").children("td").map(function () {
+            return $(this).text();
+        });
+
+        $('#editId').val(data[0]);
+        $('#eFirstName').attr('placeholder', data[1]);
+        $('#eLastName').attr('placeholder', data[2]);
+        $('#eAge').val(data[3]);
+        $('#eEmail').attr('placeholder', data[4]);
+    });
 });
 
 
-$.getJSON('http://localhost:8080/list', function (json) {
-    var tr = [];
-    for (var i = 0; i < json.length; i++) {
-        tr.push('<tr>');
-        tr.push('<td>' + json[i].id + '</td>');
-        tr.push('<td>' + json[i].firstName + '</td>');
-        tr.push('<td>' + json[i].lastName + '</td>');
-        tr.push('<td>' + json[i].age + '</td>');
-        tr.push('<td>' + json[i].email + '</td>');
-        tr.push('<td>' + json[i].allRoles + '</td>');
-        tr.push('<td><button class=\'edit\'>Edit</button></td>');
-        tr.push('<td><button class=\'delete\' id=' + json[i].id + '>Delete</button></td>');
-        tr.push('</tr>');
-    }
-    $('tbody').append($(tr.join('')));
-});
+
+
+
+
+
+
+
+
+
+
+
 
 

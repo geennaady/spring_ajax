@@ -15,7 +15,7 @@ import web.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class MyRestController {
     @Autowired
     private UserService userService;
@@ -26,22 +26,27 @@ public class MyRestController {
     @Autowired
     private BCryptPasswordEncoder bCryptEncoder;
 
-    @PostMapping(value = "api/add")
-    public ResponseEntity<Void> saveUser(@RequestBody User user, @RequestParam Long role) {
+    @PostMapping(value = "/add/{role}")
+    public ResponseEntity<Void> saveUser(@RequestBody User user, @PathVariable Long role) {
+        //todo Решить вопрос с паролем
+        user.setPassword("1");
+        ResponseEntity<Void> resp;
+
         if (user.getEmail().isEmpty() || user.getPassword().isEmpty() || user.getFirstName().isEmpty()
                 || user.getLastName().isEmpty() || user.getAge() == null) {
-            System.out.println("All fields are required!");
+            resp = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             try {
                 user.setRoles(roleService.getAuthorityById(role));
                 user.setPassword(bCryptEncoder.encode(user.getPassword()));
                 userService.addUser(user);
+                resp = new ResponseEntity<>(HttpStatus.OK);
             } catch (Exception e) {
-                System.out.println("Email already exists");
+                resp = new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
             }
         }
 
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return resp;
     }
 
     @GetMapping(value = "/list")
