@@ -26,8 +26,6 @@ public class MyRestController {
 
     @PostMapping(value = "/add/{role}")
     public ResponseEntity<Void> saveUser(@RequestBody User user, @PathVariable Long role) {
-        //todo Решить вопрос с паролем
-        user.setPassword("1");
         ResponseEntity<Void> resp;
 
         if (user.getEmail().isEmpty() || user.getPassword().isEmpty() || user.getFirstName().isEmpty()
@@ -67,8 +65,6 @@ public class MyRestController {
     @PostMapping(value = "/update/{role}")
     public ResponseEntity<Void> updateUser(@RequestBody User user, @PathVariable Long role) {
         ResponseEntity<Void> resp;
-        System.out.println(user.getPassword());
-        user.setPassword("1");
 
         User oldUser = (User) userService.getUserById(user.getId());
 

@@ -81,6 +81,8 @@ $(function () {
             password: $('#ePassword').val(),
         }
 
+        console.log(jsonObj);
+
         $.ajax({
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
@@ -118,6 +120,8 @@ $(function () {
             email: $('#aEmail').val(),
             password: $('#aPassword').val(),
         }
+
+        console.log(jsonObj);
 
         $.ajax({
             type: 'POST',

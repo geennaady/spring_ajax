@@ -33,7 +33,7 @@ public class User implements UserDetails {
     Long age;
 
     @Column
-    @JsonIgnore
+    //@JsonIgnore
     String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
