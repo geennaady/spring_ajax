@@ -1,14 +1,3 @@
-/*
-function modalId(id, tagId) {
-    let a = document.getElementById(tagId);
-    a.setAttribute("value", id);
-}
-
-$('#type-btn').click(function () {
-    alert('lol');
-});
-
-*/
 function listUser() {
     $.getJSON('http://localhost:8080/api/list', function (json) {
         let tr = [];
@@ -30,14 +19,8 @@ function listUser() {
     });
 }
 
-listUser();
-
-$('#nav-admin-tab').click(function () {
-    $("tbody").empty();
-    listUser();
-})
-
-$(function () {
+function adminData() {
+    $('#tbody-single').empty();
     $.getJSON('http://localhost:8080/api/admin', function (json) {
         let tr = [];
         console.log(json)
@@ -50,8 +33,25 @@ $(function () {
         tr.push('<td>' + json.allRoles + '</td>');
         tr.push('</tr>');
 
+        console.log("admin");
+
         $('#tbody-single').append($(tr.join('')));
     });
+}
+
+listUser();
+
+$('#nav-admin-tab').click(function () {
+    $("tbody").empty();
+    listUser();
+})
+
+$('#list-user-list').click(function () {
+    adminData();
+})
+
+$(function () {
+    adminData();
 
     $('#btn-delete-user').click(function () {
         let id = $('#deleteId').val();
@@ -59,14 +59,29 @@ $(function () {
         $.ajax({
             type: 'DELETE',
             url: 'http://localhost:8080/api/delete/' + id,
-            cache: false
+            cache: false,
+            success: function (result) {
+                setTimeout(function () {
+                    console.log("in");
+                    $("tbody").empty();
+                    listUser();
+                }, 200);
+            },
+            error: function (err) {
+                $("#h1-admin").append("<h6><div class=\"alert alert-danger alert-dismissible fade show\" role=\"alert\">\n" +
+                    "  <strong>Warning!</strong> Wrong data!\n" +
+                    "  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
+                    "    <span aria-hidden=\"true\">&times;</span>\n" +
+                    "  </button>\n" +
+                    "</div></h6>")
+            }
         });
 
-        $("tbody").empty();
-        listUser();
+        /*$("tbody").empty();
+        listUser();*/
 
         $('#deleteModal').modal('hide');
-        return false;
+        //return false;
     })
 
     $('#btn-edit-user').click(function () {
@@ -81,7 +96,7 @@ $(function () {
             password: $('#ePassword').val(),
         }
 
-        console.log(jsonObj);
+        //console.log(jsonObj);
 
         $.ajax({
             type: 'POST',
@@ -121,7 +136,7 @@ $(function () {
             password: $('#aPassword').val(),
         }
 
-        console.log(jsonObj);
+        //console.log(jsonObj);
 
         $.ajax({
             type: 'POST',
@@ -175,10 +190,10 @@ $(function () {
         });
 
         $('#editId').val(data[0]);
-        $('#eFirstName').attr('placeholder', data[1]);
-        $('#eLastName').attr('placeholder', data[2]);
+        $('#eFirstName').val(data[1]);
+        $('#eLastName').val(data[2]);
         $('#eAge').val(data[3]);
-        $('#eEmail').attr('placeholder', data[4]);
+        $('#eEmail').val(data[4]);
     });
 });
 
